@@ -185,7 +185,7 @@ const MonotonicQueue = Queue("MonotonicQueue", struct {
             },
             .macos, .ios, .tvos, .watchos, .visionos => std.posix.CLOCK.UPTIME_RAW,
             .linux => std.posix.CLOCK.MONOTONIC,
-            else => std.posix.CLOCK.BOOTTIME,
+            else => std.posix.CLOCK.UPTIME,
         };
         var ts: std.posix.timespec = undefined;
         std.posix.clock_gettime(clock_id, &ts) catch return error.Unsupported;
