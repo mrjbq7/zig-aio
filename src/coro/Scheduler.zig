@@ -20,7 +20,7 @@ pub const InitOptions = struct {
 pub fn init(allocator: std.mem.Allocator, opts: InitOptions) aio.Error!@This() {
     var work = try aio.Dynamic.init(allocator, opts.io_queue_entries);
     work.queue_callback = ioQueue;
-    work.completion_callback = ioCompletition;
+    work.completion_callback = ioCompletion;
     return .{ .allocator = allocator, .io = work };
 }
 
@@ -110,7 +110,7 @@ fn ioQueue(uop: aio.Dynamic.Uop, id: aio.Id) void {
     }
 }
 
-fn ioCompletition(uop: aio.Dynamic.Uop, _: aio.Id, failed: bool) void {
+fn ioCompletion(uop: aio.Dynamic.Uop, _: aio.Id, failed: bool) void {
     const OperationContext = @import("io.zig").OperationContext;
     switch (uop) {
         inline else => |*op| {
