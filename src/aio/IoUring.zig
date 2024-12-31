@@ -685,7 +685,11 @@ inline fn uring_handle_completion(op: anytype, cqe: *std.os.linux.io_uring_cqe) 
         .send => if (op.out_written) |w| {
             w.* = @intCast(cqe.res);
         },
-        .recv_msg, .send_msg, .shutdown => {},
+        .recv_msg => op.out_read.* = @intCast(cqe.res),
+        .send_msg => if (op.out_written) |w| {
+            w.* = @intCast(cqe.res);
+        },
+        .shutdown => {},
         .open_at => op.out_file.handle = cqe.res,
         .close_file, .close_dir, .close_socket => {},
         .notify_event_source, .wait_event_source, .close_event_source => {},
@@ -696,7 +700,7 @@ inline fn uring_handle_completion(op: anytype, cqe: *std.os.linux.io_uring_cqe) 
             if (Supported.waitid) {
                 if (op.out_term) |term| term.* = posix.statusToTerm(@intCast(op._.siginfo.fields.common.second.sigchld.status));
             } else {
-                try posix.perform(op, .{ .fd = op._.fd, .events= .{ .in = true } });
+                try posix.perform(op, .{ .fd = op._.fd, .events = .{ .in = true } });
             }
         },
         .socket => op.out_socket.* = cqe.res,
