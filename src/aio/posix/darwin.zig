@@ -6,34 +6,34 @@ pub const ChildWatcher = bsd.ChildWatcher;
 
 pub const msghdr = extern struct {
     /// Optional address.
-    msg_name: ?*std.posix.sockaddr,
+    name: ?*std.posix.sockaddr,
     /// Size of address.
-    msg_namelen: std.posix.socklen_t,
+    namelen: std.posix.socklen_t,
     /// Scatter/gather array.
-    msg_iov: [*]std.posix.iovec,
+    iov: [*]std.posix.iovec,
     /// Number of elements in msg_iov.
-    msg_iovlen: i32,
+    iovlen: i32,
     /// Ancillary data.
-    msg_control: ?*anyopaque,
+    control: ?*anyopaque,
     /// Ancillary data buffer length.
-    msg_controllen: std.posix.socklen_t,
+    controllen: std.posix.socklen_t,
     /// Flags on received message.
-    msg_flags: i32,
+    flags: i32,
 };
 
 pub const msghdr_const = extern struct {
     /// Optional address.
-    msg_name: ?*const std.posix.sockaddr,
+    name: ?*const std.posix.sockaddr,
     /// Size of address.
-    msg_namelen: std.posix.socklen_t,
+    namelen: std.posix.socklen_t,
     /// Scatter/gather array.
-    msg_iov: [*]std.posix.iovec_const,
+    iov: [*]std.posix.iovec_const,
     /// Number of elements in msg_iov.
-    msg_iovlen: i32,
+    iovlen: i32,
     /// Ancillary data.
-    msg_control: ?*anyopaque,
+    control: ?*anyopaque,
     /// Ancillary data buffer length.
-    msg_controllen: std.posix.socklen_t,
+    controllen: std.posix.socklen_t,
     /// Flags on received message.
-    msg_flags: i32,
+    flags: i32,
 };
