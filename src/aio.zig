@@ -225,7 +225,7 @@ pub const NotifyEventSource = ops.NotifyEventSource;
 pub const WaitEventSource = ops.WaitEventSource;
 pub const CloseEventSource = ops.CloseEventSource;
 
-pub const posix = @import("posix/posix.zig");
+pub const posix = @import("aio/posix/posix.zig");
 
 test "shared outputs" {
     var tmp = std.testing.tmpDir(.{});
