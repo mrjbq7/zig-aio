@@ -65,7 +65,7 @@ test {
     std.testing.refAllDecls(@This());
 }
 
-fn sleep(ns: u64) void {
+pub fn sleep(ns: u64) void {
     io.single(aio.Timeout{ .ns = @intCast(ns) }) catch @panic("Unable to sleep");
 }
 
