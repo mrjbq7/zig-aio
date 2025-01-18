@@ -200,6 +200,12 @@ pub fn complete(
     completion_cb: fn (ctx: Ctx, id: u16, uop: *Operation.Union, failure: Operation.Error) void,
 ) aio.CompletionResult {
     const finished = self.finished.swap();
+    for (finished, 0..) |res1, idx1| {
+        for (finished, 0..) |res2, idx2| {
+            if (idx1 == idx2) continue;
+            if (res1.id == res2.id) @panic("operation finished multiple times");
+        }
+    }
     var num_errors: u16 = 0;
     for (finished) |res| {
         var failure = res.failure;
